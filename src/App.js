@@ -1,14 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import FocusModeTab from './FocusModeTab'
 
-function App() {
+import { withStyles } from "@material-ui/core/styles";
+
+import Header from './Components/Header'
+import FocusModeTab from './Components/FocusModeTab'
+
+const appStyles = {
+app: {
+  width: "400px",
+  height: "500px",
+  backgroundColor: "#eee"
+}
+}
+
+
+function App(props) {
+  const { classes } = props;
   return (
-    <div className="App">
+    <div className={classes.app}>
+      <Header />
       <FocusModeTab />
     </div>
   );
 }
 
-export default App;
+export default withStyles(appStyles)(App);

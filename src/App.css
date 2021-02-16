@@ -1,6 +1,8 @@
-.App {
-  text-align: center;
-}
+/* .App {
+  width: 400px;
+  height: 500px;
+  background-color: #eee,
+} */
 
 .App-logo {
   height: 40vmin;
@@ -22,17 +24,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

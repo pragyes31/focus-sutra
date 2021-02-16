@@ -2,18 +2,22 @@ import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 
-import Button from '@material-ui/core/Button';
-import InputAdornment from '@material-ui/core/InputAdornment';
+
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import TextField from "@material-ui/core/TextField";
+
+import FocusModeOff from './FocusModeOff'
+import FocusModeOn from './FocusModeOn'
 
 const focusModeTabStyles = {
-  focusModeTab: {
-    width: "400px",
-    height: "500px",
-    backgroundColor: "#eee",
+  switch: {
+    display:"flex",
+    justifyContent:"center",
+    margin:"1.5rem 0"
   },
+  switchBtn: {
+    marginLeft:"0.5rem"
+  }
 };
 
 class FocusModeTab extends React.Component {
@@ -39,39 +43,27 @@ else {
   }
   render() {
     const { classes } = this.props;
+    const {focusMode} = this.state
     return (
       <div className={classes.focusModeTab}>
         <div className={classes.focusSwitch}>
           <FormControlLabel
             control={
               <Switch
-                checked={this.state.focusMode}
+                checked={focusMode}
                 onChange={this.handleChange}
                 name="focusMode"
                 color="primary"
+                className={classes.switchBtn}
               />
             }
             label="Enable Focus mode"
             labelPlacement="start"
+            className={classes.switch}
           />
         </div>
-        <div className={classes.focusLength}>
+        {focusMode ? <FocusModeOn />: <FocusModeOff />}
         
-           <TextField
-          label="Focus period"
-          id="outlined-start-adornment"
-          InputProps={{
-            endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
-          }}
-          variant="outlined"
-          value={this.state.focusPeriod}
-          onChange={this.handleFocusPeriod}
-        />
-        <div>{this.state.error && "Only Integers between 15 and 45 are accepted"}</div>
-        <Button variant="contained" color="primary">
-        Start
-      </Button>
-        </div>
       </div>
     );
   }
