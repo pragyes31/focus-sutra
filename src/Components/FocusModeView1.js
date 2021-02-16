@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 
-const focusModeOffStyles = {
+const focusModeView1Styles = {
   focusModeTab: {
     width: "400px",
     height: "500px",
@@ -38,13 +38,21 @@ const focusModeOffStyles = {
   },
 };
 
-class FocusModeOff extends React.Component {
+class FocusModeView1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  handleFocusPeriod = (e) => {
+    let focusPeriod = e.target.value;
+    if (focusPeriod >= 15 && focusPeriod <= 45) {
+      this.setState({ focusPeriod: parseInt(focusPeriod), error: false });
+    } else {
+      this.setState({ focusPeriod, error: true });
+    }
+  };
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
     return (
       <div>
         <div className={classes.focusLengthBox}>
@@ -65,7 +73,7 @@ class FocusModeOff extends React.Component {
         </div>
 
         <div className={classes.error}>
-          {this.state.error && "Only Integers between 15 and 45 are accepted"}
+          {error && "Only Integers between 15 and 45 are accepted"}
         </div>
         <div className={classes.startBtn}>
           <Button variant="contained" color="primary" className={classes.start}>
@@ -77,4 +85,4 @@ class FocusModeOff extends React.Component {
   }
 }
 
-export default withStyles(focusModeOffStyles)(FocusModeOff);
+export default withStyles(focusModeView1Styles)(FocusModeView1);

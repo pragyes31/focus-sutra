@@ -2,22 +2,26 @@ import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 
-
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-import FocusModeOff from './FocusModeOff'
-import FocusModeOn from './FocusModeOn'
+import FocusModeView1 from "./FocusModeView1";
+import FocusModeView2 from "./FocusModeView2";
 
 const focusModeTabStyles = {
   switch: {
-    display:"flex",
-    justifyContent:"center",
-    margin:"1.5rem 0"
+    display: "flex",
+    justifyContent: "center",
+    margin: "1.5rem 0",
   },
   switchBtn: {
-    marginLeft:"0.5rem"
-  }
+    marginLeft: "0.5rem",
+  },
+  description: {
+    padding: "1.2rem",
+    textAlign: "center",
+    lineHeight: "1.7rem",
+  },
 };
 
 class FocusModeTab extends React.Component {
@@ -25,25 +29,17 @@ class FocusModeTab extends React.Component {
     super(props);
     this.state = {
       focusMode: false,
-      focusPeriod:30,
-      error:false
+      focusPeriod: 30,
+      error: false,
+      timerOn: true,
     };
   }
   handleChange = () => {
     this.setState({ focusMode: !this.state.focusMode });
   };
-  handleFocusPeriod = (e) => {
-let focusPeriod = e.target.value;
-if(focusPeriod >=15 && focusPeriod <=45) {
-    this.setState({focusPeriod:parseInt(focusPeriod), error:false})
-}
-else {
-    this.setState({focusPeriod, error:true})
-}
-  }
   render() {
     const { classes } = this.props;
-    const {focusMode} = this.state
+    const { focusMode, error, timerOn } = this.state;
     return (
       <div className={classes.focusModeTab}>
         <div className={classes.focusSwitch}>
@@ -62,8 +58,19 @@ else {
             className={classes.switch}
           />
         </div>
-        {focusMode ? <FocusModeOn />: <FocusModeOff />}
-        
+        {focusMode ? (
+          timerOn ? (
+            <FocusModeView2 />
+          ) : (
+            <FocusModeView1 error={error}/>
+          )
+        ) : (
+          <div className={classes.description}>
+            Enabling focus mode would block all the social media websites. Check
+            the ""Block it" tab for list of sites blocked by default and to add
+            customization.
+          </div>
+        )}
       </div>
     );
   }
