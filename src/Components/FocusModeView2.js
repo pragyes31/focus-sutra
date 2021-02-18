@@ -11,14 +11,17 @@ const focusModeView2Styles = makeStyles({
   },
   progressBar: {
     margin: "1rem 2rem",
-    border: "1px solid #888",
+    border: "1px solid #aaa",
     height: "1rem",
-  },
-  progress: {
-    width: "100px",
+    width: (progressBar) => `${progressBar}px`,
     backgroundColor: "#aabb66",
-    transition: "all 300ms",
-  },
+    transition: "all 300ms"
+  }
+  // progress: {
+  //   width: (progressBar) => `${progressBar}%`,
+  //   backgroundColor: "#aabb66",
+  //   transition: "all 300ms",
+  // },
 });
 
 const FocusModeView2 = (props) => {
@@ -40,11 +43,9 @@ const FocusModeView2 = (props) => {
       let totalSecsLeft = newMinsLeft * 60 + newSecsLeft;
       setMinsLeft(newMinsLeft);
       setSecsLeft(newSecsLeft);
-      if (totalSecsLeft % 5 !== 0) {
-        let currentProgress =
-          ((timerLengthInSecs - totalSecsLeft) / timerLengthInSecs) * 100;
+      let currentProgress =
+          ((timerLengthInSecs - totalSecsLeft) / timerLengthInSecs) * 400;
         setProgress(currentProgress);
-      }
 
       if (newMinsLeft <= 0 && newSecsLeft <= 0) {
         clearInterval(timer);
@@ -59,7 +60,6 @@ const FocusModeView2 = (props) => {
         {secsLeft < 10 ? `0${secsLeft}` : secsLeft}
       </div>
       <div className={styles.progressBar}>
-        <div className={styles.progress}></div>
       </div>
     </div>
   );

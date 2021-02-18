@@ -1,3 +1,5 @@
+/*global chrome*/
+
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -56,6 +58,7 @@ class FocusModeView1 extends React.Component {
   };
   startTimer = () => {
     this.props.startTimer(this.state.focusPeriod)
+    chrome.runtime.sendMessage({timerOn: this.props.timerOn});
   }
   render() {
     const { classes } = this.props;

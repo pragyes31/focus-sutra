@@ -30,7 +30,7 @@ class FocusModeOn extends React.Component {
         {timerOn ? (
           <FocusModeView2 focusPeriod={focusPeriod}/>
         ) : (
-          <FocusModeView1 startTimer={this.startTimer} />
+          <FocusModeView1 startTimer={this.startTimer} timerOn={timerOn} />
         )}
       </div>
     );
