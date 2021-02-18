@@ -47,6 +47,7 @@ class FocusModeTab extends React.Component {
                 name="focusMode"
                 color="primary"
                 className={classes.switchBtn}
+              //  disabled={focusMode}
               />
             }
             label="Enable Focus mode"

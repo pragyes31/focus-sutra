@@ -1,17 +1,73 @@
 import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core";
 
-const focusModeView2Styles = {
-  focusModeTab: {
-    width: "400px",
-    height: "500px",
-    backgroundColor: "#eee",
+const focusModeView2Styles = makeStyles({
+  timer: {
+    margin: "1rem",
+    fontFamily: "'Play', cursive",
+    fontSize: "4rem",
+    textAlign: "center",
   },
-};
+  progressBar: {
+    margin: "1rem 2rem",
+    border: "1px solid #888",
+    height: "1rem",
+  },
+  progress: {
+    width: "100px",
+    backgroundColor: "#aabb66",
+    transition: "all 300ms",
+  },
+});
 
 const FocusModeView2 = (props) => {
   const [minsLeft, setMinsLeft] = useState(props.focusPeriod);
   const [secsLeft, setSecsLeft] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const styles = focusModeView2Styles(progress);
+
+  useEffect(() => {
+    let startTime = Date.now();
+    let timeLength = minsLeft * 60 * 1000;
+    let timerLengthInSecs = props.focusPeriod * 60;
+    let endTime = startTime + timeLength;
+    let timer = setInterval(() => {
+      let currentTime = Date.now();
+      let newMinsLeft = Math.floor((endTime - currentTime) / (1000 * 60));
+      let newSecsLeft = Math.round(((endTime - currentTime) / 1000) % 60);
+      newSecsLeft = newSecsLeft === 60 ? 0 : newSecsLeft;
+      let totalSecsLeft = newMinsLeft * 60 + newSecsLeft;
+      setMinsLeft(newMinsLeft);
+      setSecsLeft(newSecsLeft);
+      if (totalSecsLeft % 5 !== 0) {
+        let currentProgress =
+          ((timerLengthInSecs - totalSecsLeft) / timerLengthInSecs) * 100;
+        setProgress(currentProgress);
+      }
+
+      if (newMinsLeft <= 0 && newSecsLeft <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  }, []);
+
+  return (
+    <div>
+      <div className={styles.timer}>
+        {minsLeft < 10 ? `0${minsLeft}` : minsLeft} :{" "}
+        {secsLeft < 10 ? `0${secsLeft}` : secsLeft}
+      </div>
+      <div className={styles.progressBar}>
+        <div className={styles.progress}></div>
+      </div>
+    </div>
+  );
+};
+
+export default FocusModeView2;
+
+//export default withStyles(focusModeView2Styles)(FocusModeView2);
 
 // let redirectUrl = () => {
 //   chrome.webRequest.onBeforeRequest.addListener(
@@ -21,55 +77,4 @@ const FocusModeView2 = (props) => {
 //     {urls:["facebook.com"]},
 //     ["blocking"]
 //   )
-// }
-
-  useEffect(() => {
-    let startTime = Date.now();
-    let timeLength = minsLeft * 60 * 1000;
-    let endTime = startTime + timeLength;
-    let timer = setInterval(() => {
-      let currentTime = Date.now();
-      let newMinsLeft = Math.floor((endTime - currentTime) / (1000 * 60));
-      let newSecsLeft = Math.floor(((endTime - currentTime) / 1000) % 60);
-      setMinsLeft(newMinsLeft);
-      setSecsLeft(newSecsLeft);
-      if (newMinsLeft <= 0 && newSecsLeft <= 0) {
-        clearInterval(timer);
-      }
-    }, 1000);
-  }, []);
-
-  return (
-    <div>
-      <div>
-        {minsLeft < 10 ? `0${minsLeft}` : minsLeft} :{" "}
-        {secsLeft < 10 ? `0${secsLeft}` : secsLeft}
-      </div>
-    </div>
-  );
-};
-
-export default withStyles(focusModeView2Styles)(FocusModeView2);
-
-// class FocusModeOn extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       timeLeft: {
-//         minsLeft: this.props.focusPeriod,
-//         secsLeft: 0,
-//       },
-//     };
-//   }
-//   render() {
-//     let { minsLeft, secsLeft } = this.state.timeLeft;
-//     return (
-//       <div>
-//         <div>
-//           {minsLeft < 10 ? `0${minsLeft}` : minsLeft} :{" "}
-//           {secsLeft < 10 ? `0${secsLeft}` : secsLeft}
-//         </div>
-//       </div>
-//     );
-//   }
 // }
