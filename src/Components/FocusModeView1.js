@@ -41,18 +41,25 @@ const focusModeView1Styles = {
 class FocusModeView1 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      focusPeriod:30,
+      error:false
+    };
   }
   handleFocusPeriod = (e) => {
     let focusPeriod = e.target.value;
-    if (focusPeriod >= 15 && focusPeriod <= 45) {
+    if (focusPeriod >= 1) {
       this.setState({ focusPeriod: parseInt(focusPeriod), error: false });
     } else {
       this.setState({ focusPeriod, error: true });
     }
   };
+  startTimer = () => {
+    this.props.startTimer(this.state.focusPeriod)
+  }
   render() {
-    const { classes, error } = this.props;
+    const { classes } = this.props;
+    const {error} = this.state;
     return (
       <div>
         <div className={classes.focusLengthBox}>
@@ -68,15 +75,12 @@ class FocusModeView1 extends React.Component {
             value={this.state.focusPeriod}
             onChange={this.handleFocusPeriod}
             className={classes.focusLength}
-            focussed={true}
+            helperText={error && "Integers only please. Duh!"}
+            error={error}
           />
         </div>
-
-        <div className={classes.error}>
-          {error && "Only Integers between 15 and 45 are accepted"}
-        </div>
         <div className={classes.startBtn}>
-          <Button variant="contained" color="primary" className={classes.start}>
+          <Button variant="contained" color="primary" className={classes.start} onClick={this.startTimer} disabled={error}>
             Start
           </Button>
         </div>

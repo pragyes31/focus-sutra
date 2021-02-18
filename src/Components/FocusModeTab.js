@@ -5,8 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-import FocusModeView1 from "./FocusModeView1";
-import FocusModeView2 from "./FocusModeView2";
+import FocusModeOn from './FocusModeOn'
 
 const focusModeTabStyles = {
   switch: {
@@ -28,10 +27,7 @@ class FocusModeTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focusMode: false,
-      focusPeriod: 30,
-      error: false,
-      timerOn: true,
+      focusMode: false
     };
   }
   handleChange = () => {
@@ -59,16 +55,12 @@ class FocusModeTab extends React.Component {
           />
         </div>
         {focusMode ? (
-          timerOn ? (
-            <FocusModeView2 />
-          ) : (
-            <FocusModeView1 error={error}/>
-          )
+          <FocusModeOn />
         ) : (
           <div className={classes.description}>
             Enabling focus mode would block all the social media websites. Check
-            the ""Block it" tab for list of sites blocked by default and to add
-            customization.
+            the "Block it" tab for the list of sites blocked by default and to
+            add/remove more websites.
           </div>
         )}
       </div>
