@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
+
 import FocusModeView1 from "./FocusModeView1";
 import FocusModeView2 from "./FocusModeView2";
 
@@ -22,6 +23,7 @@ class FocusModeOn extends React.Component {
   }
   startTimer = (focusPeriod) => {
     this.setState({ timerOn: true, focusPeriod });
+    this.props.SaveTimerinLocal(true)
   };
   render() {
     let { timerOn, focusPeriod } = this.state;

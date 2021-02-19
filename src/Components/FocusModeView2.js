@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core";
 
 const focusModeView2Styles = makeStyles({
@@ -65,7 +64,7 @@ const FocusModeView2 = (props) => {
   );
 };
 
-export default FocusModeView2;
+  export default FocusModeView2;
 
 //export default withStyles(focusModeView2Styles)(FocusModeView2);
 
