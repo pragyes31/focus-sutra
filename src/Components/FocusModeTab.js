@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core";
@@ -12,23 +12,44 @@ import Switch from "@material-ui/core/Switch";
 import FocusModeView1 from "./FocusModeView1";
 import FocusModeView2 from "./FocusModeView2";
 
-
 const focusModeTabStyles = makeStyles({});
 
 const FocusModeTab = (props) => {
   const classes = focusModeTabStyles();
-  const[timerOn, toggleTimer] = useState(false)
-  const[focusPeriod, setFocusPeriod] = useState(30)
 
+  let timerStatus = localStorage.getItem("timerOn");
+
+  const [timerOn, toggleTimer] = useState(timerStatus);
+  const [focusPeriod, setFocusPeriod] = useState();
 
   let startTimer = (focusPeriod) => {
-    localStorage.setItem('timerOn', true)
+    localStorage.setItem("timerOn", true);
+    localStorage.setItem("startTime", Date.now())
+    localStorage.setItem("focusPeriod", focusPeriod)
+    localStorage.setItem("minsLeft", focusPeriod)
+    localStorage.setItem("secsLeft", 0)
     toggleTimer(true);
-  }
+  };
+
+  let resetTimer = () => {
+    localStorage.setItem("timerOn", false);
+    toggleTimer(false);
+  };
+
+  let setTimerLength = (timerLength) => {
+    setFocusPeriod(timerLength);
+  };
 
   return (
     <div className={classes.focusModeTab}>
-      {timerOn ? <FocusModeView2 focusPeriod={focusPeriod}/> : <FocusModeView1 startTimer={startTimer}/>}
+      {timerOn ? (
+        <FocusModeView2 focusPeriod={focusPeriod} resetTimer={resetTimer} />
+      ) : (
+        <FocusModeView1
+          setTimerLength={setTimerLength}
+          startTimer={startTimer}
+        />
+      )}
     </div>
   );
 };

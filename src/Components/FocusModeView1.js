@@ -44,7 +44,7 @@ class FocusModeView1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      focusPeriod:30,
+      focusPeriod:3,
       error:false
     };
   }
@@ -52,6 +52,7 @@ class FocusModeView1 extends React.Component {
     let focusPeriod = e.target.value;
     if (focusPeriod >= 1) {
       this.setState({ focusPeriod: parseInt(focusPeriod), error: false });
+      this.props.setTimerLength(focusPeriod)
     } else {
       this.setState({ focusPeriod, error: true });
     }
