@@ -5,9 +5,12 @@
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "index.html",
-    "default_title": "Focus Sutra",
-    "scripts": ["app/background.js"]
+    "default_title": "Focus Sutra"
   },
+  "background": {
+    "scripts": [
+        "app/background.js"
+    ]},
   "permissions":["webRequest", "webRequestBlocking", "<all_urls>"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"}
 

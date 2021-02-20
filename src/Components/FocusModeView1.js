@@ -58,10 +58,8 @@ class FocusModeView1 extends React.Component {
     }
   };
   startTimer = () => {
-    localStorage.setItem('timerLengthinMins', this.state.focusPeriod);
-    localStorage.setItem('timerOn', true);
     this.props.startTimer(this.state.focusPeriod)
-   // chrome.runtime.sendMessage({timerOn: this.props.timerOn});
+    chrome.runtime.sendMessage({timerOn: this.props.timerOn});
   }
   render() {
     const { classes } = this.props;
